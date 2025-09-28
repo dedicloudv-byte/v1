@@ -1,0 +1,18 @@
+{
+  "name": "vless-worker",
+  "version": "1.0.0",
+  "description": "A VLESS worker for Cloudflare",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "author": "Jules",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240405.0",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.47.0"
+  }
+}
