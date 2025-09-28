@@ -265,6 +265,7 @@ function compareArrays(a: Uint8Array, b: Uint8Array): boolean {
  */
 function handleConfigRequest(url: URL, env: Env): Response {
 	const address = url.hostname;
+	// The vlessLink remains the same, as it's just a text string.
 	const vlessLink = `vless://${env.UUID}@${address}:443?path=${encodeURIComponent(env.VLESS_PATH)}&security=tls&encryption=none&host=${address}&type=ws#${encodeURIComponent(address)}`;
 
 	const html = `
@@ -273,7 +274,7 @@ function handleConfigRequest(url: URL, env: Env): Response {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VLESS Configuration</title>
+    <title>Connection Details</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 40px; background-color: #f4f4f7; color: #333; }
         .container { max-width: 700px; margin: 0 auto; background-color: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -290,24 +291,24 @@ function handleConfigRequest(url: URL, env: Env): Response {
 </head>
 <body>
     <div class="container">
-        <h1>VLESS Configuration</h1>
-        <p>Use the following details to configure your V2Ray/Xray client.</p>
+        <h1>Connection Details</h1>
+        <p>Use the following details for your client application.</p>
 
         <table>
             <tr><th>Parameter</th><th>Value</th></tr>
             <tr><td>Address</td><td>${address}</td></tr>
             <tr><td>Port</td><td>443</td></tr>
-            <tr><td>UUID</td><td>${env.UUID}</td></tr>
+            <tr><td>ID / UUID</td><td>${env.UUID}</td></tr>
             <tr><td>Network</td><td>ws (WebSocket)</td></tr>
             <tr><td>Security</td><td>tls</td></tr>
             <tr><td>Path</td><td>${env.VLESS_PATH}</td></tr>
             <tr><td>Host / SNI</td><td>${address}</td></tr>
         </table>
 
-        <h2>Configuration Link</h2>
-        <p>Click the button below to copy the VLESS configuration link:</p>
-        <div class="config-link" id="vlessLink">${vlessLink}</div>
-        <button class="copy-button" onclick="copyConfig()">Copy Link</button>
+        <h2>Configuration URI</h2>
+        <p>Click the button below to copy the configuration URI:</p>
+        <div class="config-link" id="configLink">${vlessLink}</div>
+        <button class="copy-button" onclick="copyConfig()">Copy URI</button>
     </div>
 
     <div class="footer">
@@ -316,9 +317,9 @@ function handleConfigRequest(url: URL, env: Env): Response {
 
     <script>
         function copyConfig() {
-            const link = document.getElementById('vlessLink').innerText;
+            const link = document.getElementById('configLink').innerText;
             navigator.clipboard.writeText(link).then(() => {
-                alert('VLESS link copied to clipboard!');
+                alert('Configuration URI copied to clipboard!');
             }, (err) => {
                 alert('Failed to copy: ', err);
             });
