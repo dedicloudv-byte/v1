@@ -13,6 +13,7 @@ Ini memungkinkan Anda untuk merutekan lalu lintas internet Anda melalui jaringan
 - **Rute Fallback (Penyamaran)**: Permintaan yang bukan koneksi VLESS (misalnya, kunjungan dari browser) akan dialihkan ke situs web lain, sehingga worker Anda tidak terlihat mencurigakan.
 - **Konfigurasi Mudah**: Cukup edit file `wrangler.toml` untuk mengatur UUID, path rahasia, dan host fallback Anda.
 - **Keamanan TLS**: Semua koneksi secara otomatis diamankan dengan TLS (HTTPS) oleh Cloudflare.
+- **Dukungan Domain Kustom**: Dapat dengan mudah dihubungkan ke domain atau subdomain pribadi Anda.
 
 ## Cara Deployment
 
@@ -21,13 +22,13 @@ Ini memungkinkan Anda untuk merutekan lalu lintas internet Anda melalui jaringan
 1.  Akun [Cloudflare](https://dash.cloudflare.com/sign-up).
 2.  [Node.js](https://nodejs.org/en/) dan `npm` terinstal di komputer Anda.
 
-### Langkah 1: Clone atau Unduh Proyek
+### Langkah 1: Dapatkan File Proyek
 
-Dapatkan semua file proyek ini ke komputer lokal Anda.
+Unduh atau salin semua file dari proyek ini ke direktori di komputer Anda.
 
 ### Langkah 2: Instal Dependensi
 
-Buka terminal di direktori proyek dan jalankan perintah berikut. Perintah ini akan menginstal `wrangler`, alat command-line dari Cloudflare.
+Buka terminal di direktori proyek dan jalankan perintah berikut. Ini akan menginstal `wrangler`, alat command-line dari Cloudflare.
 
 ```bash
 npm install
@@ -60,18 +61,16 @@ npx wrangler deploy
 
 Setelah proses selesai, terminal akan menampilkan URL worker Anda, seperti `https://your-worker-name.your-subdomain.workers.dev`. Simpan URL ini.
 
-## Konfigurasi Klien (Contoh: v2rayN)
+## Konfigurasi Klien (Contoh: v2rayN/V2Box)
 
-Gunakan detail berikut untuk mengatur aplikasi klien V2Ray Anda:
+Gunakan detail berikut untuk mengatur aplikasi klien V2Ray Anda. **Perhatikan setiap kolom dengan teliti.**
 
--   **Address (Alamat):** URL worker Anda (misalnya, `my-secret-proxy-123.my-account.workers.dev`)
+-   **Address (Alamat):** URL worker Anda (atau domain kustom Anda). Contoh: `my-worker.my-account.workers.dev`
 -   **Port:** `443`
--   **ID (UUID):** UUID yang Anda atur di `wrangler.toml`
--   **Flow:** (biarkan kosong atau atur sesuai kebutuhan)
+-   **ID (UUID):** UUID yang Anda atur di `wrangler.toml`.
 -   **Security (Keamanan):** `tls`
 -   **Network (Jaringan):** `ws`
--   **Path (Jalur):** Path rahasia Anda (misalnya, `/a1b2-c3d4-e5f6`)
--   **Host:** (biarkan kosong atau isi dengan URL worker Anda)
--   **TLS/SNI:** (biarkan kosong atau isi dengan URL worker Anda)
+-   **Path (Jalur):** Path rahasia Anda dari `wrangler.toml`. Contoh: `/a1b2-c3d4-e5f6`
+-   **Host / SNI:** **WAJIB DIISI!** Isi dengan nilai yang sama persis seperti di kolom `Address`. Contoh: `my-worker.my-account.workers.dev`. **Kesalahan di sini menyebabkan error "TLS handshake failure"**.
 
 Anda sekarang siap untuk terhubung!
