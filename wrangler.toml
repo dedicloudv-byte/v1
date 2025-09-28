@@ -5,7 +5,6 @@ name = "vl22" # TODO: Change this to your worker's name
 main = "src/index.ts"
 compatibility_date = "2024-04-05"
 # This flag is required to enable outbound TCP sockets via `connect()`.
-compatibility_flags = 
 
 [vars]
 # Your custom UUID. You can generate one from https://www.uuidgenerator.net/
