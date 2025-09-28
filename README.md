@@ -10,7 +10,8 @@ Ini memungkinkan Anda untuk merutekan lalu lintas internet Anda melalui jaringan
 - **Transport WebSocket (WS)**: Membungkus lalu lintas VLESS dalam koneksi WebSocket, membuatnya tampak seperti lalu lintas web HTTPS biasa dan sulit untuk dideteksi atau diblokir.
 - **Dukungan Penuh Jaringan (Full Proxy)**: Setelah terhubung, semua lalu lintas TCP Anda akan dirutekan melalui worker.
 - **Berjalan di Jaringan CDN Cloudflare**: Mendapatkan manfaat dari kecepatan, latensi rendah, dan stabilitas jaringan global Cloudflare.
-- **Rute Fallback (Penyamaran)**: Permintaan yang bukan koneksi VLESS (misalnya, kunjungan dari browser) akan dialihkan ke situs web lain, sehingga worker Anda tidak terlihat mencurigakan.
+- **Halaman Konfigurasi Web**: Mengunjungi alamat utama worker akan menampilkan halaman web yang berisi semua detail konfigurasi dan link `vless://` yang bisa disalin dengan satu klik.
+- **Rute Fallback (Penyamaran)**: Permintaan ke path lain (selain path VLESS dan path utama) akan dialihkan ke situs web lain, sehingga worker Anda tidak terlihat mencurigakan.
 - **Konfigurasi Mudah**: Cukup edit file `wrangler.toml` untuk mengatur UUID, path rahasia, dan host fallback Anda.
 - **Keamanan TLS**: Semua koneksi secara otomatis diamankan dengan TLS (HTTPS) oleh Cloudflare.
 - **Dukungan Domain Kustom**: Dapat dengan mudah dihubungkan ke domain atau subdomain pribadi Anda.
