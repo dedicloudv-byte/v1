@@ -12,10 +12,13 @@ export default {
 		try {
 			const url = new URL(request.url);
 
-			// Check if the request path matches the secret VLESS path
+			// Route based on the path
 			if (url.pathname === env.VLESS_PATH) {
 				// Handle VLESS WebSocket connection
 				return handleVless(request, env);
+			} else if (url.pathname === '/') {
+				// Show the configuration page at the root
+				return handleConfigRequest(url, env);
 			} else {
 				// For all other paths, act as a fallback proxy
 				return handleFallback(request, env);
@@ -252,4 +255,80 @@ function compareArrays(a: Uint8Array, b: Uint8Array): boolean {
 		}
 	}
 	return true;
+}
+
+/**
+ * Generates an HTML page with VLESS configuration details.
+ * @param url The request URL.
+ * @param env The environment variables.
+ * @returns A Response object containing the HTML page.
+ */
+function handleConfigRequest(url: URL, env: Env): Response {
+	const address = url.hostname;
+	const vlessLink = `vless://${env.UUID}@${address}:443?path=${encodeURIComponent(env.VLESS_PATH)}&security=tls&encryption=none&host=${address}&type=ws#${encodeURIComponent(address)}`;
+
+	const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLESS Configuration</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 40px; background-color: #f4f4f7; color: #333; }
+        .container { max-width: 700px; margin: 0 auto; background-color: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #00529b; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; font-weight: 600; }
+        td { word-break: break-all; }
+        .config-link { background-color: #e7e7e7; padding: 15px; border-radius: 5px; font-family: "Courier New", Courier, monospace; word-break: break-all; margin-top: 20px; }
+        .copy-button { display: block; width: 100%; padding: 12px; margin-top: 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.2s; }
+        .copy-button:hover { background-color: #0056b3; }
+        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VLESS Configuration</h1>
+        <p>Use the following details to configure your V2Ray/Xray client.</p>
+
+        <table>
+            <tr><th>Parameter</th><th>Value</th></tr>
+            <tr><td>Address</td><td>${address}</td></tr>
+            <tr><td>Port</td><td>443</td></tr>
+            <tr><td>UUID</td><td>${env.UUID}</td></tr>
+            <tr><td>Network</td><td>ws (WebSocket)</td></tr>
+            <tr><td>Security</td><td>tls</td></tr>
+            <tr><td>Path</td><td>${env.VLESS_PATH}</td></tr>
+            <tr><td>Host / SNI</td><td>${address}</td></tr>
+        </table>
+
+        <h2>Configuration Link</h2>
+        <p>Click the button below to copy the VLESS configuration link:</p>
+        <div class="config-link" id="vlessLink">${vlessLink}</div>
+        <button class="copy-button" onclick="copyConfig()">Copy Link</button>
+    </div>
+
+    <div class="footer">
+        <p>Powered by Cloudflare Workers</p>
+    </div>
+
+    <script>
+        function copyConfig() {
+            const link = document.getElementById('vlessLink').innerText;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('VLESS link copied to clipboard!');
+            }, (err) => {
+                alert('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
+`;
+
+	return new Response(html, {
+		headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+	});
 }
