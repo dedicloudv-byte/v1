@@ -23,6 +23,9 @@ Ini memungkinkan Anda untuk merutekan lalu lintas internet Anda melalui jaringan
 1.  Akun [Cloudflare](https://dash.cloudflare.com/sign-up).
 2.  [Node.js](https://nodejs.org/en/) dan `npm` terinstal di komputer Anda.
 
+**Catatan Penting Mengenai Konektivitas:**
+Worker ini menggunakan fitur `connect()` (TCP Sockets) untuk meneruskan lalu lintas. Fitur ini secara resmi merupakan bagian dari paket **Cloudflare Workers Paid**. Meskipun terkadang berfungsi pada paket gratis, fungsionalitas penuh tidak dijamin. Jika Anda mengalami error koneksi setelah deploy berhasil, ini kemungkinan besar adalah penyebabnya.
+
 ### Langkah 1: Dapatkan File Proyek
 
 Unduh atau salin semua file dari proyek ini ke direktori di komputer Anda.
