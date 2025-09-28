@@ -11,10 +11,10 @@ UUID = "dff533b7-8172-4d92-8b9e-2439d06363bd"
 
 # The host to which VLESS traffic will be proxied.
 # It's recommended to use a host that supports WebSocket, like 'v2ray.com'.
-PROXY_HOST = "quiz.vidio.com"
+PROXY_HOST = "178.128.80.43:443"
 
 # The path for VLESS connections. It should be kept secret.
 VLESS_PATH = "/vles"
 
 # The target website for fallback (when a request is not a VLESS connection).
-FALLBACK_HOST = "www.cloudflare.com"
+FALLBACK_HOST = "cac.ahem7553.workers.dev"
