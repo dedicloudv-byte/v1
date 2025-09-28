@@ -17,4 +17,4 @@ PROXY_HOST = "178.128.80.43:443"
 VLESS_PATH = "/vles"
 
 # The target website for fallback (when a request is not a VLESS connection).
-FALLBACK_HOST = "cac.ahem7553.workers.dev"
+FALLBACK_HOST = "quiz.vidio.com"
