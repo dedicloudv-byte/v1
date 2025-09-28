@@ -1,0 +1,20 @@
+# This is a configuration file for Wrangler, the command-line tool for Cloudflare Workers.
+# For more information, see https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "vless-worker" # TODO: Change this to your worker's name
+main = "src/index.ts"
+compatibility_date = "2024-04-05"
+
+[vars]
+# Your custom UUID. You can generate one from https://www.uuidgenerator.net/
+UUID = "add-your-uuid-here"
+
+# The host to which VLESS traffic will be proxied.
+# It's recommended to use a host that supports WebSocket, like 'v2ray.com'.
+PROXY_HOST = "v2ray.com"
+
+# The path for VLESS connections. It should be kept secret.
+VLESS_PATH = "/your-secret-path"
+
+# The target website for fallback (when a request is not a VLESS connection).
+FALLBACK_HOST = "https://www.wikipedia.org"
